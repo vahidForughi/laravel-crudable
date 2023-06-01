@@ -137,7 +137,7 @@ Nothing
 
 ## Support us
 
-Spatie is a webdesign agency based in Antwerp, Belgium. You'll find an overview of all our open source projects [on our website](https://generaltools.io).
+Generaltools is a webdesign agency based in Tehran, Iran. You'll find an overview of all our open source projects [on our website](https://generaltools.io).
 
 ## License
 
