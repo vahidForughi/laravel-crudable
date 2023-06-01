@@ -1,0 +1,26 @@
+namespace Generaltools\Crudable\Models;
+
+
+use Illuminate\Database\Eloquent\Model;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
+
+class {{ EntityName }} extends Model
+{
+    use HasSlug;
+
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('title')
+            ->saveSlugsTo('slug');
+    }
+
+    protected $table = '{{ EntityTable }}';
+    protected $fillable = {{ EntityFillable }};
+    protected $guarded = {{ EntityGuarded }};
+    protected $hidden = {{ EntityHidden }};
+    protected $appends = {{ EntityAppends }};
+    protected $casts = {{ EntityCasts }};
+
+}
