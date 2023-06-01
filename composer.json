@@ -1,0 +1,47 @@
+{
+    "name": "generaltools/crudable",
+    "description": "Crud Generator For Laravel Aplications.",
+    "keywords": [
+        "crud",
+        "api",
+        "admin",
+        "laravel"
+    ],
+    "authors": [
+        {
+            "name": "VahidForughi",
+            "email": "forughivahid7@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "homepage": "https://generaltools.io/laravel-crudable",
+    "license": "MIT",
+    "require": {
+        "illuminate/support": "~5",
+        "spatie/laravel-sluggable": "^2.2"
+    },
+    "require-dev": {},
+    "config": {},
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Generaltools\\Crudable\\CrudableServiceProvider"
+            ],
+            "aliases": {
+                "Crudable": "Generaltools\\Crudable\\Facades\\Crudable"
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Generaltools\\Crudable\\": "src"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {},
+    "support": {
+        "issues": "https://github.com/vahidforughi/laravel-crudable/issues",
+        "docs": "https://generaltools.io/laravel-crudable/introduction"
+    }
+}

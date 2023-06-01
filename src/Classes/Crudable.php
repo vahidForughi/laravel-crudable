@@ -1,0 +1,221 @@
+<?php
+
+namespace Generaltools\Crudable\Classes;
+
+use Generaltools\Crudable\Classes\Config\Config;
+use Generaltools\Crudable\Classes\Action\HasAction;
+use Generaltools\Crudable\Classes\Controller\HasController;
+use Generaltools\Crudable\Classes\Entity\HasEntities;
+use Generaltools\Crudable\Classes\Model\ModelsRequests;
+use Generaltools\Crudable\Classes\Chain\HasChain;
+use Generaltools\Crudable\Handlers\Crud\AuthorizeHandler;
+use Generaltools\Crudable\Handlers\Crud\ValidateHandler;
+use Generaltools\Crudable\Handlers\Crud\ModelHandler;
+use Generaltools\Crudable\Handlers\Crud\QueryHandler;
+use Generaltools\Crudable\Handlers\Crud\ActionHandler;
+use Generaltools\Crudable\Handlers\Crud\ResponseHandler;
+use Generaltools\Crudable\Actions\Crud\IndexAction;
+use Generaltools\Crudable\Actions\Crud\StoreAction;
+use Generaltools\Crudable\Actions\Crud\ShowAction;
+use Generaltools\Crudable\Actions\Crud\UpdateAction;
+use Generaltools\Crudable\Actions\Crud\DestroyAction;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Gate;
+
+class Crudable
+{
+    use
+//        ModelsRequests,
+        HasEntities,
+        HasController,
+        HasChain,
+        HasAction;
+
+    static private $config;
+
+    protected $response = [];
+
+    protected array $resources = [];
+
+    protected $query;
+
+
+    protected array $actions = [
+        'index' => IndexAction::class,
+        'store' => StoreAction::class,
+        'show' => ShowAction::class,
+        'update' => UpdateAction::class,
+        'destroy' => DestroyAction::class
+    ];
+
+
+    protected array $handlers = [
+        'authorize' => AuthorizeHandler::class,
+        'validate' => ValidateHandler::class,
+        'model' => ModelHandler::class,
+        'query' => QueryHandler::class,
+        'action' => ActionHandler::class,
+        'response' => ResponseHandler::class
+    ];
+
+
+    function init(): void
+    {
+        $this->parseResourcesAndActionFromRoute();
+
+        $this->initConfig();
+
+        $this->initPolicies();
+
+        $this->initQuery();
+
+        $this->initController('crudable', $this->action);
+
+        $this->setChain($this->handlers);
+    }
+
+
+    private function parseResourcesAndActionFromRoute()
+    {
+        $routeNames = explode('.',request()->route()->getName());
+        $action = end($routeNames);
+        $resources = [];
+
+        foreach (array_slice($routeNames, 0, count($routeNames) - 1 ) as $routeName)
+            $resources[$routeName] = request()->route()->parameter(Str::singular($routeName));
+            
+        $this->setAction(new ($this->actions[$action])($action));
+        $this->setResources($resources);
+    }
+
+
+    private function initConfig()
+    {
+        self::$config = new Config;
+    }
+
+
+    private function initPolicies()
+    {
+        foreach (self::config()->entitiesKeys() as $entity) {
+            Gate::define($entity.'update-post', function () {
+                return request()->user()->hasPermission();
+            });
+        }
+    }
+
+
+    private function initQuery()
+    {
+        $firstModelKey = array_key_first($this->resources); 
+        $query = $this->loadModel($firstModelKey)->query();
+        foreach ($this->resources as $key => $resource) {
+            if ($firstModelKey != $key)
+                $query = $query->firstOrFail()->{$key}();
+            if ($resource)
+                $query = $query->where($query->getModel()->getKeyName(),$resource);
+//                $query = $query->findOrFail($resource);
+        }
+//        dd($this->entity(array_key_last($this->resources()))->getRules($this->action->name));
+        $this->setQuery($query);
+    }
+
+    
+    public function loadModel($name)
+    {
+        return new (self::entity($name)->getModelClass());
+    }
+
+
+    public function setQuery($query)
+    {
+        $this->query = $query;
+    }
+
+
+    public function query()
+    {
+        return $this->query;
+    }
+
+
+    private function globalBinds($action): void
+    {
+        $this->crudBinds($action);
+    }
+
+
+    private function crudBinds() {
+        foreach($this->getHandlers() as $operation)
+        {
+            $this->bind('before-'.$operation, function () use ($operation) { $this->action->{'before' . ucwords($operation)}(); });
+            $this->bind($operation, function () use ($operation) { $this->action->{$operation}(); });
+            $this->bind('after-'.$operation, function () use ($operation) { $this->action->{'after' . ucwords($operation)}(); });
+        }
+    }
+
+//
+//    function do($action)
+//    {
+//        return app()->call($action, EntityController::class);
+//    }
+
+
+    function __call($func_name, $args)
+    {
+        /* this section create function name such as [ 'authorize' => 'makeAthorize', 'validate' => 'makeValidate' , ...] */
+        $handlersFuncNames = [];
+        foreach(array_keys($this->handlers) as $handler_key)
+            $handlersFuncNames[$handler_key] = $this->getHandlerFuncName($handler_key);
+
+        if (in_array($func_name, $handlersFuncNames))
+            return $this->make(array_search ($func_name, $handlersFuncNames));
+
+        return null;
+    }
+
+
+    function resources()
+    {
+        return $this->resources;
+    }
+
+
+    function getHandlers()
+    {
+        return array_keys($this->handlers);
+    }
+
+
+    function getActions()
+    {
+        return array_keys($this->actions);
+    }
+
+
+    function getHandlerFuncName($name): string
+    {
+        return 'make'.ucwords($name);
+    }
+
+
+    function response()
+    {
+        return $this->response;
+    }
+
+    function setResponse($response)
+    {
+        $this->response = $response;
+    }
+
+    function setResources($resources)
+    {
+        $this->resources = $resources;
+    }
+
+    static function config()
+    {
+        return self::$config;
+    }
+}
