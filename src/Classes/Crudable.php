@@ -24,19 +24,17 @@ use Illuminate\Support\Str;
 class Crudable
 {
     use
-//        ModelsRequests,
+        HasQuery,
         HasEntities,
         HasController,
         HasChain,
-        HasAction;
+        HasAction
+        ;
 
     static private $config;
 
     protected $response = [];
 
-    protected array $resources = [];
-
-    protected $query;
 
 
     protected array $actions = [
@@ -103,39 +101,6 @@ class Crudable
         }
     }
 
-
-    private function initQuery()
-    {
-        $firstModelKey = array_key_first($this->resources); 
-        $query = $this->loadModel($firstModelKey)->query();
-        foreach ($this->resources as $key => $resource) {
-            if ($firstModelKey != $key)
-                $query = $query->firstOrFail()->{$key}();
-            if ($resource)
-                $query = $query->where($query->getModel()->getKeyName(),$resource);
-//                $query = $query->findOrFail($resource);
-        }
-//        dd($this->entity(array_key_last($this->resources()))->getRules($this->action->name));
-        $this->setQuery($query);
-    }
-
-    
-    public function loadModel($name)
-    {
-        return new (self::entity($name)->getModelClass());
-    }
-
-
-    public function setQuery($query)
-    {
-        $this->query = $query;
-    }
-
-
-    public function query()
-    {
-        return $this->query;
-    }
 
 
     private function globalBinds($action): void
