@@ -63,22 +63,52 @@ CrudableRoute::apiCrud('articles');
 ]
 ```
 
-This project have driver system to load entities schema from the config, json file, sql database, redis. So It's have an interface to create your own drivers too.
+Your APIs Are Ready !!!
 
+
+## Configurations
+
+This project have driver system to load entities schema from the config, json file, sql database, redis. 
+
+/config/crudable.php
 ```php
-interface StoreDriver {
-    public function all();
-    public function keys();
-    public function find(string $key);
-    public function constants();
-    public function constant($key);
-}
+"driver" => env('CRUDABLE_DRIVER', 'config'),
+    
+"store" => [
+    'config' => [
+        'driver' => 'config',
+        'file' => 'entities'
+    ],
+
+    'json' => [
+        'driver' => 'json',
+        'file' => 'entities'
+    ],
+
+    'database' => [
+        'driver' => 'database',
+        'table' => 'entities',
+        'connection' => 'mysql'
+    ],
+
+    'redis' => [
+        'driver' => 'redis',
+        'connection' => 'default'
+    ],
+]
 ```
 
 
 ## Costomize
 
 You can use provided configuration or customize anything such as query, authorization, validation, model class, controllers and etc.
+
+So you can create your own route and controller then use crudable entities handlers;
+
+api.php
+```php
+CrudableRoute::apiCrud('articles', YourController::class);
+```
 
 controller.php
 ```php
@@ -95,19 +125,63 @@ Crudable::makeBeforeAction();
 Crudable::makeAction();
 Crudable::makeAfterAction();
 Crudable::makeResponse();
+```
 
-// or you can bind
+Also you can bind your codes to crudable handlers to costomize that;
+
+```php
 Crudable::init();
 $controller = Crudable::controller();
+
 $controller->bind('after-authorize', fn () => {
     //somthing else
 });
+
+$controller->bind('query', fn () => {
+    //somthing else
+});
+
 $controller->bind('before-action', fn () => {
     //somthing else
 });
-Crudable::handle([]);
 ```
 
+For extend or costomize models we provide some configuration in entities schema.
+
+/config/entities.php
+```php
+//extend models
+"user" => [
+    "model_extended" => "Illuminate\Foundation\Auth\User",
+    "model_uses" => [
+        "Laravel\Sanctum\HasApiTokens",
+        "Illuminate\Database\Eloquent\Factories\HasFactory",
+        "Illuminate\Notifications\Notifiable"
+    ],
+
+    "fillable" => ["name","email","password"],
+    "hidden" => ["password","remember_token"],
+    // etc...
+]
+
+//or use your own
+"user" => [
+            "model_class" => "App\Models\User"
+]
+```
+
+
+Store drivers costomizable too. So It's have an interface to create your own drivers.
+
+```php
+interface StoreDriver {
+    public function all();
+    public function keys();
+    public function find(string $key);
+    public function constants();
+    public function constant($key);
+}
+```
 
 ## Changelog
 
