@@ -2,9 +2,9 @@
 
 namespace Generaltools\Crudable\Classes\Entity\traits;
 
-use Generaltools\Crudable\Classes\Entity\Entity;
-use Generaltools\Crudable\Classes\Names;
 use Generaltools\Crudable\Classes\Crudable;
+use Generaltools\Crudable\Classes\Entity\Entity;
+use Generaltools\Crudable\Utils\Names;
 
 trait HasEntities
 {

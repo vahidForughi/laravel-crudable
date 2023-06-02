@@ -2,8 +2,7 @@
 
 namespace Generaltools\Crudable\Classes\Config\entities\drivers;
 
-use Generaltools\Crudable\Classes\Config\entities\drivers\StoreDriver;
-use Generaltools\Crudable\Classes\Names;
+use Generaltools\Crudable\Utils\Names;
 
 class ConfigStoreDriver implements StoreDriver {
 

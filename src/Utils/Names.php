@@ -1,6 +1,6 @@
 <?php
 
-namespace Generaltools\Crudable\Classes;
+namespace Generaltools\Crudable\Utils;
 
 use Illuminate\Support\Str;
 

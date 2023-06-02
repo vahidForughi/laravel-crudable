@@ -1,6 +1,8 @@
 <?php
 
-namespace Generaltools\Crudable\Classes;
+namespace Generaltools\Crudable\Utils;
+
+use function Generaltools\Crudable\Classes\view;
 
 class Stub
 {

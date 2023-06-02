@@ -3,12 +3,9 @@
 namespace Generaltools\Crudable\Classes\Entity;
 
 use Generaltools\Crudable\Classes\Crudable;
-use Generaltools\Crudable\Classes\Entity\Relation;
-use Generaltools\Crudable\Classes\Entity\Route;
-use Generaltools\Crudable\Classes\Names;
-use Generaltools\Crudable\Classes\Stub;
 use Generaltools\Crudable\Models\Concerns\HasConstantValue;
-use Generaltools\Crudable\Utils\Convertor;
+use Generaltools\Crudable\Utils\Names;
+use Generaltools\Crudable\Utils\Stub;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
