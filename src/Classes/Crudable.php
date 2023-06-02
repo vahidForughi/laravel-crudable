@@ -105,6 +105,14 @@ class Crudable
 //    }
 
 
+    /**
+    * @method public function makeAuthorize
+    * @method public function makeValidate
+    * @method public function makeModel
+    * @method public function makeQuery
+    * @method public function makeAction
+    * @method public function makeResponse
+    **/
     function __call($func_name, $args)
     {
         /* this section create function name such as [ 'authorize' => 'makeAthorize', 'validate' => 'makeValidate' , ...] */
@@ -119,7 +127,7 @@ class Crudable
     }
 
 
-    function getHandlerFuncName($name): string
+    private function getHandlerFuncName($name): string
     {
         return 'make'.ucwords($name);
     }
