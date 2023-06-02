@@ -43,4 +43,16 @@ trait HasQuery
         return $this->query;
     }
 
+
+    function resources()
+    {
+        return $this->resources;
+    }
+
+
+    function setResources($resources)
+    {
+        $this->resources = $resources;
+    }
+
 }

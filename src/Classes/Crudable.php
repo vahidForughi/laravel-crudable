@@ -137,12 +137,6 @@ class Crudable
     }
 
 
-    function resources()
-    {
-        return $this->resources;
-    }
-
-
     function getHandlers()
     {
         return array_keys($this->handlers);
@@ -160,12 +154,6 @@ class Crudable
         return 'make'.ucwords($name);
     }
 
-
-
-    function setResources($resources)
-    {
-        $this->resources = $resources;
-    }
 
     static function config()
     {
