@@ -1,6 +1,6 @@
 <?php
 
-namespace Generaltools\Crudable\Actions\Crud;
+namespace Generaltools\Crudable\Controllers\Actions\Crud;
 
 use Generaltools\Crudable\Classes\Action\ActionInterface;
 use Generaltools\Crudable\Facades\Crudable;

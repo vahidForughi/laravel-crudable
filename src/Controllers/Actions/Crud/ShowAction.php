@@ -1,11 +1,12 @@
 <?php
 
-namespace Generaltools\Crudable\Actions\Crud;
+namespace Generaltools\Crudable\Controllers\Actions\Crud;
 
 use Generaltools\Crudable\Classes\Action\ActionInterface;
 use Generaltools\Crudable\Facades\Crudable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
+use function Generaltools\Crudable\Actions\Crud\request;
 
 class ShowAction extends Action implements ActionInterface
 {

@@ -2,25 +2,24 @@
 
 namespace Generaltools\Crudable\Classes;
 
-use Generaltools\Crudable\Classes\Config\Config;
 use Generaltools\Crudable\Classes\Action\HasAction;
+use Generaltools\Crudable\Classes\Chain\HasChain;
+use Generaltools\Crudable\Classes\Config\Config;
 use Generaltools\Crudable\Classes\Controller\HasController;
 use Generaltools\Crudable\Classes\Entity\HasEntities;
-use Generaltools\Crudable\Classes\Model\ModelsRequests;
-use Generaltools\Crudable\Classes\Chain\HasChain;
+use Generaltools\Crudable\Controllers\Actions\Crud\DestroyAction;
+use Generaltools\Crudable\Controllers\Actions\Crud\IndexAction;
+use Generaltools\Crudable\Controllers\Actions\Crud\ShowAction;
+use Generaltools\Crudable\Controllers\Actions\Crud\StoreAction;
+use Generaltools\Crudable\Controllers\Actions\Crud\UpdateAction;
+use Generaltools\Crudable\Handlers\Crud\ActionHandler;
 use Generaltools\Crudable\Handlers\Crud\AuthorizeHandler;
-use Generaltools\Crudable\Handlers\Crud\ValidateHandler;
 use Generaltools\Crudable\Handlers\Crud\ModelHandler;
 use Generaltools\Crudable\Handlers\Crud\QueryHandler;
-use Generaltools\Crudable\Handlers\Crud\ActionHandler;
 use Generaltools\Crudable\Handlers\Crud\ResponseHandler;
-use Generaltools\Crudable\Actions\Crud\IndexAction;
-use Generaltools\Crudable\Actions\Crud\StoreAction;
-use Generaltools\Crudable\Actions\Crud\ShowAction;
-use Generaltools\Crudable\Actions\Crud\UpdateAction;
-use Generaltools\Crudable\Actions\Crud\DestroyAction;
-use Illuminate\Support\Str;
+use Generaltools\Crudable\Handlers\Crud\ValidateHandler;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Str;
 
 class Crudable
 {
