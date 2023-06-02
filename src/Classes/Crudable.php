@@ -43,7 +43,7 @@ class Crudable
     ];
 
 
-    protected array $handlers = [
+    private array $handlers = [
         'authorize' => AuthorizeHandler::class,
         'validate' => ValidateHandler::class,
         'model' => ModelHandler::class,
@@ -108,7 +108,7 @@ class Crudable
         }
     }
 
-//
+
 //    function do($action)
 //    {
 //        return app()->call($action, EntityController::class);
@@ -126,12 +126,6 @@ class Crudable
             return $this->make(array_search ($func_name, $handlersFuncNames));
 
         return null;
-    }
-
-
-    function getHandlers()
-    {
-        return array_keys($this->handlers);
     }
 
 

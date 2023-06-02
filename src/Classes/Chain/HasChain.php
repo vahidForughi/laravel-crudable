@@ -8,6 +8,8 @@ trait HasChain
 
     private Chain $chain;
 
+    private array $handlers = [];
+
 
     function setChain($handlers)
     {
@@ -18,6 +20,12 @@ trait HasChain
     function handle($request)
     {
         $this->chain->handle($request);
+    }
+
+
+    function handlers()
+    {
+        return array_keys($this->handlers);
     }
 
 }
