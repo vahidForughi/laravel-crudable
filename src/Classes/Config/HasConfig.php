@@ -14,4 +14,10 @@ trait HasConfig
         self::$config = new Config;
     }
 
+    
+    static function config()
+    {
+        return self::$config;
+    }
+
 }

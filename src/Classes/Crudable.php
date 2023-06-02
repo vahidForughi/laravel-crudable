@@ -134,9 +134,4 @@ class Crudable
         return 'make'.ucwords($name);
     }
 
-
-    static function config()
-    {
-        return self::$config;
-    }
 }
