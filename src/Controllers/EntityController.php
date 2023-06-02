@@ -23,7 +23,7 @@ class EntityController extends Controller
 
     function __call($func_name, $args)
     {
-        if (in_array($func_name, Crudable::getActions()))
+        if (in_array($func_name, Crudable::actions()))
             return Response::success(Crudable::response());
 
         return null;
