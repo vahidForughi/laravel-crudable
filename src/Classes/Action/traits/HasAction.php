@@ -1,6 +1,6 @@
 <?php
 
-namespace Generaltools\Crudable\Classes\Action;
+namespace Generaltools\Crudable\Classes\Action\traits;
 
 use Generaltools\Crudable\Classes\Action\ActionInterface;
 

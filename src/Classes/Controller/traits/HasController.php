@@ -1,7 +1,9 @@
 <?php
 
-namespace Generaltools\Crudable\Classes\Controller;
+namespace Generaltools\Crudable\Classes\Controller\traits;
 
+
+use Generaltools\Crudable\Classes\Controller\Controller;
 
 trait HasController
 {

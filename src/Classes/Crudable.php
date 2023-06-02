@@ -2,11 +2,13 @@
 
 namespace Generaltools\Crudable\Classes;
 
-use Generaltools\Crudable\Classes\Action\HasAction;
-use Generaltools\Crudable\Classes\Chain\HasChain;
-use Generaltools\Crudable\Classes\Config\Config;
-use Generaltools\Crudable\Classes\Controller\HasController;
-use Generaltools\Crudable\Classes\Entity\HasEntities;
+use Generaltools\Crudable\Classes\Config\traits\HasConfig;
+use Generaltools\Crudable\Classes\Action\traits\HasAction;
+use Generaltools\Crudable\Classes\Chain\traits\HasChain;
+use Generaltools\Crudable\Classes\Controller\traits\HasController;
+use Generaltools\Crudable\Classes\Entity\traits\HasEntities;
+use Generaltools\Crudable\Classes\Entity\traits\HasQuery;
+use Generaltools\Crudable\Classes\Response\traits\HasResponse;
 use Generaltools\Crudable\Controllers\Actions\Crud\DestroyAction;
 use Generaltools\Crudable\Controllers\Actions\Crud\IndexAction;
 use Generaltools\Crudable\Controllers\Actions\Crud\ShowAction;
@@ -23,8 +25,7 @@ use Illuminate\Support\Str;
 
 class Crudable
 {
-    use
-        HasConfig,
+    use HasConfig,
         HasQuery,
         HasEntities,
         HasController,

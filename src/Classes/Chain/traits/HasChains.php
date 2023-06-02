@@ -1,7 +1,9 @@
 <?php
 
-namespace Generaltools\Crudable\Classes\Chain;
+namespace Generaltools\Crudable\Classes\Chain\traits;
 
+
+use Generaltools\Crudable\Classes\Chain\Chain;
 
 trait HasChains
 {
