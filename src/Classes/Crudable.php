@@ -28,13 +28,11 @@ class Crudable
         HasEntities,
         HasController,
         HasChain,
-        HasAction
+        HasAction,
+        HasResponse
         ;
 
     static private $config;
-
-    protected $response = [];
-
 
 
     protected array $actions = [
@@ -163,15 +161,6 @@ class Crudable
     }
 
 
-    function response()
-    {
-        return $this->response;
-    }
-
-    function setResponse($response)
-    {
-        $this->response = $response;
-    }
 
     function setResources($resources)
     {
