@@ -18,7 +18,6 @@ class EntityController extends Controller
 //        Crudable::makeQuery();
 //        Crudable::makeAction();
 //        Crudable::makeResponse();
-//        dd('111');
     }
 
 
