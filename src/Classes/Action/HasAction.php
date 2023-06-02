@@ -8,6 +8,8 @@ trait HasAction
 {
     protected ActionInterface $action;
 
+    private array $actions = [];
+
 
     function action()
     {
@@ -19,4 +21,11 @@ trait HasAction
     {
         $this->action = $action;
     }
+
+    
+    function actions()
+    {
+        return array_keys($this->actions);
+    }
+
 }

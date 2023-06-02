@@ -34,7 +34,7 @@ class Crudable
         ;
 
 
-    protected array $actions = [
+    private array $actions = [
         'index' => IndexAction::class,
         'store' => StoreAction::class,
         'show' => ShowAction::class,
@@ -126,12 +126,6 @@ class Crudable
             return $this->make(array_search ($func_name, $handlersFuncNames));
 
         return null;
-    }
-
-
-    function getActions()
-    {
-        return array_keys($this->actions);
     }
 
 
