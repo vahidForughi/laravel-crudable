@@ -12,12 +12,12 @@ use Generaltools\Crudable\Controllers\Actions\Crud\IndexAction;
 use Generaltools\Crudable\Controllers\Actions\Crud\ShowAction;
 use Generaltools\Crudable\Controllers\Actions\Crud\StoreAction;
 use Generaltools\Crudable\Controllers\Actions\Crud\UpdateAction;
-use Generaltools\Crudable\Handlers\Crud\ActionHandler;
-use Generaltools\Crudable\Handlers\Crud\AuthorizeHandler;
-use Generaltools\Crudable\Handlers\Crud\ModelHandler;
-use Generaltools\Crudable\Handlers\Crud\QueryHandler;
-use Generaltools\Crudable\Handlers\Crud\ResponseHandler;
-use Generaltools\Crudable\Handlers\Crud\ValidateHandler;
+use Generaltools\Crudable\Controllers\Handlers\Crud\ActionHandler;
+use Generaltools\Crudable\Controllers\Handlers\Crud\AuthorizeHandler;
+use Generaltools\Crudable\Controllers\Handlers\Crud\ModelHandler;
+use Generaltools\Crudable\Controllers\Handlers\Crud\QueryHandler;
+use Generaltools\Crudable\Controllers\Handlers\Crud\ResponseHandler;
+use Generaltools\Crudable\Controllers\Handlers\Crud\ValidateHandler;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 

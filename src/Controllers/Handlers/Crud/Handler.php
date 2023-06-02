@@ -1,6 +1,6 @@
 <?php
 
-namespace Generaltools\Crudable\Handlers\Crud;
+namespace Generaltools\Crudable\Controllers\Handlers\Crud;
 
 
 use Generaltools\Crudable\Classes\Chain\BaseHandler;

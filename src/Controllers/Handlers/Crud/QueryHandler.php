@@ -1,9 +1,9 @@
 <?php
 
-namespace Generaltools\Crudable\Handlers\Crud;
+namespace Generaltools\Crudable\Controllers\Handlers\Crud;
 
 
-class ResponseHandler extends Handler
+class QueryHandler extends Handler
 {
 
     public function handle($request)

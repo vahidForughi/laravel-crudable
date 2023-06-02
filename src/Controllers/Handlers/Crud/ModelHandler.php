@@ -1,16 +1,16 @@
 <?php
 
-namespace Generaltools\Crudable\Handlers\Crud;
+namespace Generaltools\Crudable\Controllers\Handlers\Crud;
 
 
-class QueryHandler extends Handler
+class ModelHandler extends Handler
 {
 
     public function handle($request)
     {
         /* some else */
         //
-        
+
         parent::handle($request);
     }
 
