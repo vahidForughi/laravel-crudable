@@ -20,7 +20,6 @@ use Generaltools\Crudable\Controllers\Handlers\Crud\ModelHandler;
 use Generaltools\Crudable\Controllers\Handlers\Crud\QueryHandler;
 use Generaltools\Crudable\Controllers\Handlers\Crud\ResponseHandler;
 use Generaltools\Crudable\Controllers\Handlers\Crud\ValidateHandler;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 
 class Crudable
@@ -81,16 +80,6 @@ class Crudable
             
         $this->setAction(new ($this->actions[$action])($action));
         $this->setResources($resources);
-    }
-
-
-    private function initPolicies()
-    {
-        foreach (self::config()->entitiesKeys() as $entity) {
-            Gate::define($entity.'update-post', function () {
-                return request()->user()->hasPermission();
-            });
-        }
     }
 
 
