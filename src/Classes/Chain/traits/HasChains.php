@@ -10,8 +10,6 @@ trait HasChains
 
     private array $chains = [];
 
-    private array $handlers = [];
-
 
     function addChain($name, $handlers)
     {
@@ -31,10 +29,5 @@ trait HasChains
             $this->handleChain($name, $request);
     }
 
-
-    function handlers()
-    {
-        return array_keys($this->handlers);
-    }
 
 }

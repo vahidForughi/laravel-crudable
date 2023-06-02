@@ -2,6 +2,7 @@
 
 namespace Generaltools\Crudable\Classes\Entity\traits;
 
+use Generaltools\Crudable\Classes\Crudable;
 
 trait HasQuery
 {
@@ -28,7 +29,7 @@ trait HasQuery
     
     public function loadModel($name)
     {
-        return new (self::entity($name)->getModelClass());
+        return new (Crudable::entity($name)->getModelClass());
     }
 
 

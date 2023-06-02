@@ -8,30 +8,41 @@ use Generaltools\Crudable\Classes\Chain\traits\HasChain;
 use Generaltools\Crudable\Classes\Controller\traits\HasController;
 use Generaltools\Crudable\Classes\Entity\traits\HasEntities;
 use Generaltools\Crudable\Classes\Entity\traits\HasQuery;
+use Generaltools\Crudable\Classes\Entity\traits\HasPolicies;
 use Generaltools\Crudable\Classes\Response\traits\HasResponse;
+use Generaltools\Crudable\Controllers\Actions\Crud\DestroyAction;
+use Generaltools\Crudable\Controllers\Actions\Crud\IndexAction;
+use Generaltools\Crudable\Controllers\Actions\Crud\ShowAction;
+use Generaltools\Crudable\Controllers\Actions\Crud\StoreAction;
+use Generaltools\Crudable\Controllers\Actions\Crud\UpdateAction;
 use Generaltools\Crudable\Controllers\Handlers\Crud\ActionHandler;
 use Generaltools\Crudable\Controllers\Handlers\Crud\AuthorizeHandler;
 use Generaltools\Crudable\Controllers\Handlers\Crud\ModelHandler;
 use Generaltools\Crudable\Controllers\Handlers\Crud\QueryHandler;
 use Generaltools\Crudable\Controllers\Handlers\Crud\ResponseHandler;
 use Generaltools\Crudable\Controllers\Handlers\Crud\ValidateHandler;
-use Generaltools\Crudable\Controllers\Actions\Crud\DestroyAction;
-use Generaltools\Crudable\Controllers\Actions\Crud\IndexAction;
-use Generaltools\Crudable\Controllers\Actions\Crud\ShowAction;
-use Generaltools\Crudable\Controllers\Actions\Crud\StoreAction;
-use Generaltools\Crudable\Controllers\Actions\Crud\UpdateAction;
 use Illuminate\Support\Str;
 
 class Crudable
 {
     use HasConfig,
-        HasQuery,
         HasEntities,
+        HasQuery,
+        HasPolicies,
         HasController,
         HasChain,
         HasAction,
         HasResponse
         ;
+
+
+    private array $actions = [
+        'index' => IndexAction::class,
+        'store' => StoreAction::class,
+        'show' => ShowAction::class,
+        'update' => UpdateAction::class,
+        'destroy' => DestroyAction::class
+    ];
 
 
     private array $handlers = [
@@ -41,15 +52,6 @@ class Crudable
         'query' => QueryHandler::class,
         'action' => ActionHandler::class,
         'response' => ResponseHandler::class
-    ];
-
-
-    private array $actions = [
-        'index' => IndexAction::class,
-        'store' => StoreAction::class,
-        'show' => ShowAction::class,
-        'update' => UpdateAction::class,
-        'destroy' => DestroyAction::class
     ];
 
 
@@ -90,7 +92,7 @@ class Crudable
 
 
     private function crudBinds() {
-        foreach($this->getHandlers() as $operation)
+        foreach($this->handlers() as $operation)
         {
             $this->bind('before-'.$operation, function () use ($operation) { $this->action->{'before' . ucwords($operation)}(); });
             $this->bind($operation, function () use ($operation) { $this->action->{$operation}(); });
@@ -105,14 +107,6 @@ class Crudable
 //    }
 
 
-    /**
-    * @method public function makeAuthorize
-    * @method public function makeValidate
-    * @method public function makeModel
-    * @method public function makeQuery
-    * @method public function makeAction
-    * @method public function makeResponse
-    **/
     function __call($func_name, $args)
     {
         /* this section create function name such as [ 'authorize' => 'makeAthorize', 'validate' => 'makeValidate' , ...] */
@@ -127,9 +121,22 @@ class Crudable
     }
 
 
-    private function getHandlerFuncName($name): string
+    function getHandlerFuncName($name): string
     {
         return 'make'.ucwords($name);
     }
+
+
+    function handlers()
+    {
+        return array_keys($this->handlers);
+    }
+
+    
+    function actions()
+    {
+        return array_keys($this->actions);
+    }
+
 
 }
