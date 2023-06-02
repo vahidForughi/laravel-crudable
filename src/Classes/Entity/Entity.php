@@ -3,7 +3,7 @@
 namespace Generaltools\Crudable\Classes\Entity;
 
 use Generaltools\Crudable\Classes\Crudable;
-use Generaltools\Crudable\Models\Concerns\HasConstantValue;
+use Generaltools\Crudable\Classes\Model\traits\HasConstantValue;
 use Generaltools\Crudable\Utils\Names;
 use Generaltools\Crudable\Utils\Stub;
 use Illuminate\Database\Eloquent\Model;
@@ -71,30 +71,15 @@ class Entity
 
     public function evalModel()
     {
-        if ($this->name == 'articles'){
-//            dd($this->getters);
-//            dd(( json_decode(json_encode($this->getters), true)));
-//            dd(Convertor::arrayToBladeString(json_decode( json_encode($this), true)));
-            $template = Stub::getView('model',[
-//                'Convertor' => Convertor::class,
-//                'Name' => Names::modelName($this->name),
-//                'Extended' => $this->model_extended,
-//                'Uses' => $this->model_uses,
-//                'Slug' => $this->slug,
-//                "Table" => $this->getTable(),
-//                "Fillable" => $this->fillable,
-//                "Guarded" => $this->guarded,
-//                "Hidden" => $this->hidden,
-//                "Appends" => $this->appends,
-//                "Casts" => $this->casts,
-//                "Fields" => $this->fields,
-//                "Getters" => $this->getters,
-//                "Setters" => $this->setters,
-//                "Relations" => $this->relations
-                "Entity" => $this
-            ]);
-            dd($template);
-        }
+//        if ($this->name == 'article'){
+////            dd($this->getters);
+////            dd(( json_decode(json_encode($this->getters), true)));
+////            dd(Convertor::arrayToBladeString(json_decode( json_encode($this), true)));
+//            $template = Stub::getView('model',[
+//                "Entity" => $this
+//            ]);
+//            dd($template);
+//        }
         eval( Stub::getView('model', [
 //            'Convertor' => Convertor::class,
 //            'Name' => Names::modelName($this->name),

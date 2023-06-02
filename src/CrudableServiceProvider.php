@@ -27,7 +27,7 @@ class CrudableServiceProvider extends ServiceProvider
             ], 'crudable-config');
         }
 
-        $this->loadViewsFrom(__DIR__.'/Views', 'crudable');
+        $this->loadViewsFrom(__DIR__.'/Stubs', 'crudable.stubs');
     }
 
     /**

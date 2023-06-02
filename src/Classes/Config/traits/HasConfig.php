@@ -2,6 +2,7 @@
 
 namespace Generaltools\Crudable\Classes\Config\traits;
 
+use Generaltools\Crudable\Classes\Config\Config;
 
 trait HasConfig
 {

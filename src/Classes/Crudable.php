@@ -132,7 +132,7 @@ class Crudable
         return array_keys($this->handlers);
     }
 
-    
+
     function actions()
     {
         return array_keys($this->actions);

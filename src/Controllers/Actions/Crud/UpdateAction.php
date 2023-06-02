@@ -6,7 +6,6 @@ use App\Models\User;
 use Generaltools\Crudable\Classes\Action\ActionInterface;
 use Generaltools\Crudable\Facades\Crudable;
 use Generaltools\Crudable\Models\article;
-use function Generaltools\Crudable\Actions\Crud\request;
 
 class UpdateAction extends Action implements ActionInterface
 {

@@ -2,7 +2,6 @@
 
 namespace Generaltools\Crudable\Utils;
 
-use function Generaltools\Crudable\Classes\view;
 
 class Stub
 {
@@ -25,7 +24,7 @@ class Stub
 
     static function getView($type, array $variables)
     {
-        return view("crudable::$type", $variables)->render();
+        return view("crudable.stubs::$type", $variables)->render();
     }
 
 }
