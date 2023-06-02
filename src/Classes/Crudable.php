@@ -9,17 +9,17 @@ use Generaltools\Crudable\Classes\Controller\traits\HasController;
 use Generaltools\Crudable\Classes\Entity\traits\HasEntities;
 use Generaltools\Crudable\Classes\Entity\traits\HasQuery;
 use Generaltools\Crudable\Classes\Response\traits\HasResponse;
-use Generaltools\Crudable\Controllers\Actions\Crud\DestroyAction;
-use Generaltools\Crudable\Controllers\Actions\Crud\IndexAction;
-use Generaltools\Crudable\Controllers\Actions\Crud\ShowAction;
-use Generaltools\Crudable\Controllers\Actions\Crud\StoreAction;
-use Generaltools\Crudable\Controllers\Actions\Crud\UpdateAction;
 use Generaltools\Crudable\Controllers\Handlers\Crud\ActionHandler;
 use Generaltools\Crudable\Controllers\Handlers\Crud\AuthorizeHandler;
 use Generaltools\Crudable\Controllers\Handlers\Crud\ModelHandler;
 use Generaltools\Crudable\Controllers\Handlers\Crud\QueryHandler;
 use Generaltools\Crudable\Controllers\Handlers\Crud\ResponseHandler;
 use Generaltools\Crudable\Controllers\Handlers\Crud\ValidateHandler;
+use Generaltools\Crudable\Controllers\Actions\Crud\DestroyAction;
+use Generaltools\Crudable\Controllers\Actions\Crud\IndexAction;
+use Generaltools\Crudable\Controllers\Actions\Crud\ShowAction;
+use Generaltools\Crudable\Controllers\Actions\Crud\StoreAction;
+use Generaltools\Crudable\Controllers\Actions\Crud\UpdateAction;
 use Illuminate\Support\Str;
 
 class Crudable
@@ -34,15 +34,6 @@ class Crudable
         ;
 
 
-    private array $actions = [
-        'index' => IndexAction::class,
-        'store' => StoreAction::class,
-        'show' => ShowAction::class,
-        'update' => UpdateAction::class,
-        'destroy' => DestroyAction::class
-    ];
-
-
     private array $handlers = [
         'authorize' => AuthorizeHandler::class,
         'validate' => ValidateHandler::class,
@@ -50,6 +41,15 @@ class Crudable
         'query' => QueryHandler::class,
         'action' => ActionHandler::class,
         'response' => ResponseHandler::class
+    ];
+
+
+    private array $actions = [
+        'index' => IndexAction::class,
+        'store' => StoreAction::class,
+        'show' => ShowAction::class,
+        'update' => UpdateAction::class,
+        'destroy' => DestroyAction::class
     ];
 
 
