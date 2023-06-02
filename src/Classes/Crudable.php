@@ -24,6 +24,7 @@ use Illuminate\Support\Str;
 class Crudable
 {
     use
+        HasConfig,
         HasQuery,
         HasEntities,
         HasController,
@@ -31,8 +32,6 @@ class Crudable
         HasAction,
         HasResponse
         ;
-
-    static private $config;
 
 
     protected array $actions = [
@@ -84,12 +83,6 @@ class Crudable
     }
 
 
-    private function initConfig()
-    {
-        self::$config = new Config;
-    }
-
-
     private function initPolicies()
     {
         foreach (self::config()->entitiesKeys() as $entity) {
@@ -98,7 +91,6 @@ class Crudable
             });
         }
     }
-
 
 
     private function globalBinds($action): void
