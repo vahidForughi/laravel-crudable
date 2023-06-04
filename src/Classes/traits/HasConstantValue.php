@@ -1,6 +1,6 @@
 <?php
 
-namespace Generaltools\Crudable\Classes\Model\traits;
+namespace Generaltools\Crudable\Classes\traits;
 
 
 trait HasConstantValue

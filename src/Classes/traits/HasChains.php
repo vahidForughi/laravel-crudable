@@ -1,6 +1,6 @@
 <?php
 
-namespace Generaltools\Crudable\Classes\Chain\traits;
+namespace Generaltools\Crudable\Classes\traits;
 
 
 use Generaltools\Crudable\Classes\Chain\Chain;

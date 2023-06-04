@@ -3,7 +3,7 @@
 namespace Generaltools\Crudable\Classes\Entity;
 
 use Generaltools\Crudable\Classes\Crudable;
-use Generaltools\Crudable\Classes\Model\traits\HasConstantValue;
+use Generaltools\Crudable\Classes\traits\HasConstantValue;
 use Generaltools\Crudable\Utils\Names;
 use Generaltools\Crudable\Utils\Stub;
 use Illuminate\Database\Eloquent\Model;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Generaltools\Crudable\Classes\Response\traits;
+namespace Generaltools\Crudable\Classes\traits;
 
 
 trait HasResponse

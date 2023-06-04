@@ -1,6 +1,6 @@
 <?php
 
-namespace Generaltools\Crudable\Classes\Entity\traits;
+namespace Generaltools\Crudable\Classes\traits;
 
 use Generaltools\Crudable\Classes\Crudable;
 

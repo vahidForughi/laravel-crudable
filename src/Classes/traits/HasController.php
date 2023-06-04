@@ -1,6 +1,6 @@
 <?php
 
-namespace Generaltools\Crudable\Classes\Controller\traits;
+namespace Generaltools\Crudable\Classes\traits;
 
 
 use Generaltools\Crudable\Classes\Controller\Controller;

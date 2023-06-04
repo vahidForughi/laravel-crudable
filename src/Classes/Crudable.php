@@ -2,14 +2,14 @@
 
 namespace Generaltools\Crudable\Classes;
 
-use Generaltools\Crudable\Classes\Config\traits\HasConfig;
-use Generaltools\Crudable\Classes\Action\traits\HasAction;
-use Generaltools\Crudable\Classes\Chain\traits\HasChain;
-use Generaltools\Crudable\Classes\Controller\traits\HasController;
-use Generaltools\Crudable\Classes\Entity\traits\HasEntities;
-use Generaltools\Crudable\Classes\Entity\traits\HasQuery;
-use Generaltools\Crudable\Classes\Entity\traits\HasPolicies;
-use Generaltools\Crudable\Classes\Response\traits\HasResponse;
+use Generaltools\Crudable\Classes\traits\HasAction;
+use Generaltools\Crudable\Classes\traits\HasChain;
+use Generaltools\Crudable\Classes\traits\HasConfig;
+use Generaltools\Crudable\Classes\traits\HasController;
+use Generaltools\Crudable\Classes\traits\HasEntities;
+use Generaltools\Crudable\Classes\traits\HasPolicies;
+use Generaltools\Crudable\Classes\traits\HasQuery;
+use Generaltools\Crudable\Classes\traits\HasResponse;
 use Generaltools\Crudable\Controllers\Actions\Crud\DestroyAction;
 use Generaltools\Crudable\Controllers\Actions\Crud\IndexAction;
 use Generaltools\Crudable\Controllers\Actions\Crud\ShowAction;
