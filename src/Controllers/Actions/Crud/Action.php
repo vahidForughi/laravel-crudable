@@ -8,13 +8,17 @@ use Illuminate\Support\Str;
 
 class Action implements ActionInterface
 {
-    public string $name;
+    private string $name;
 
     function __construct(string $name)
     {
         $this->name = $name;
     }
 
+    public function getName() {
+        return $this->name;
+    }
+    
     public function beforeAuthorize() {}
     public function authorize() {}
     public function afterAuthorize() {}
@@ -22,7 +26,7 @@ class Action implements ActionInterface
     public function beforeValidate() {}
     public function validate()
     {
-        request()->validate(Crudable::entity(array_key_last(Crudable::resources()))->getRules(Crudable::action()->name));
+        request()->validate(Crudable::entity(array_key_last(Crudable::resources()))->getRules(Crudable::action()->getName()));
     }
     public function afterValidate() {}
 

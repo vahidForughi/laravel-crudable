@@ -32,8 +32,7 @@ class Crudable
         HasController,
         HasChain,
         HasAction,
-        HasResponse
-        ;
+        HasResponse;
 
 
     private array $actions = [
@@ -61,11 +60,11 @@ class Crudable
 
         $this->initConfig();
 
-        $this->initPolicies();
+        // $this->initPolicies();
 
         $this->initQuery();
 
-        $this->initController('crudable', $this->action);
+        $this->initController('crudable');
 
         $this->setChain($this->handlers);
     }
@@ -85,9 +84,9 @@ class Crudable
     }
 
 
-    private function globalBinds($action): void
+    private function globalBinds(): void
     {
-        $this->crudBinds($action);
+        $this->crudBinds();
     }
 
 
@@ -109,7 +108,7 @@ class Crudable
 
     function __call($func_name, $args)
     {
-        /* this section create function name such as [ 'authorize' => 'makeAthorize', 'validate' => 'makeValidate' , ...] */
+        /* this section create array of function names such as [ 'authorize' => 'makeAthorize', 'validate' => 'makeValidate' , ...] */
         $handlersFuncNames = [];
         foreach(array_keys($this->handlers) as $handler_key)
             $handlersFuncNames[$handler_key] = $this->getHandlerFuncName($handler_key);
@@ -121,22 +120,21 @@ class Crudable
     }
 
 
-    function getHandlerFuncName($name): string
+    public function getHandlerFuncName($name): string
     {
         return 'make'.ucwords($name);
     }
 
 
-    function handlers()
+    public function handlers()
     {
         return array_keys($this->handlers);
     }
 
 
-    function actions()
+    public function actions()
     {
         return array_keys($this->actions);
     }
-
 
 }

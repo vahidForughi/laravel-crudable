@@ -6,7 +6,7 @@ use Generaltools\Crudable\Classes\Config\entities\drivers\StoreDriver;
 use Illuminate\Support\Str;
 
 class EntitiesConfig implements StoreDriver {
-    private $storeDriver;
+    private StoreDriver $storeDriver;
     
     public function __construct() {
         $this->storeDriver = $this->newStoreDriver();

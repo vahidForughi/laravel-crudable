@@ -7,16 +7,16 @@ use Generaltools\Crudable\Classes\Controller\Controller;
 
 trait HasController
 {
-    protected Controller $controller;
+    public Controller $controller;
 
-    private function initController($name, $action): void
+    private function initController($name): void
     {
         $this->controller = Controller::getInstance($name);
         $this->controller->reset();
-        $this->globalBinds($action);
+        $this->globalBinds();
     }
 
-    private function globalBinds($action) {}
+    private function globalBinds() {}
 
     public function controller(string $action = null)
     {

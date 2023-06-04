@@ -28,8 +28,8 @@ class Config {
 
       
     public function constants($key = null) {
-        return $key ? $this->entities->constants()
-                    : $this->entities->constant($key);
+        return $key ? $this->entities->constant($key)
+                    : $this->entities->constants();
     }
     
 

@@ -17,12 +17,12 @@ trait HasQuery
         $firstModelKey = array_key_first($this->resources); 
         $query = $this->loadModel($firstModelKey)->query();
         foreach ($this->resources as $key => $resource) {
-            if ($firstModelKey != $key)
+            if ($key != $firstModelKey)
                 $query = $query->firstOrFail()->{$key}();
             if ($resource)
                 $query = $query->where($query->getModel()->getKeyName(),$resource);
-//                $query = $query->findOrFail($resource);
         }
+
         $this->setQuery($query);
     }
 

@@ -52,8 +52,8 @@ class Controller
     }
 
 
-    function getTag($name = null): string
+    public function getTag($name = null): string
     {
-        return 'controller-'.$this->name.'-'.($name?$name:'');
+        return Crudable::class.'-controller-'.$this->name.'-'.($name?$name:'');
     }
 }

@@ -2,14 +2,14 @@
 
 namespace Generaltools\Crudable;
 
-use Generaltools\Crudable\Routing\Router;
-use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-use Generaltools\Crudable\Classes\Crudable;
-use Generaltools\Crudable\Classes\Config;
-use Generaltools\Crudable\Exceptions\Handler;
 use Illuminate\Contracts\Debug\ExceptionHandler;
+use Generaltools\Crudable\Classes\Crudable;
+use Generaltools\Crudable\Routing\Router;
+use Generaltools\Crudable\Exceptions\Handler;
+// use Illuminate\Support\Facades\Blade;
+// use Illuminate\Support\Facades\View;
+// use Generaltools\Crudable\Classes\Config;
 
 class CrudableServiceProvider extends ServiceProvider
 {

@@ -72,9 +72,9 @@ class Entity
     public function evalModel()
     {
 //        if ($this->name == 'article'){
-////            dd($this->getters);
-////            dd(( json_decode(json_encode($this->getters), true)));
-////            dd(Convertor::arrayToBladeString(json_decode( json_encode($this), true)));
+// //            dd($this->getters);
+// //            dd(( json_decode(json_encode($this->getters), true)));
+// //            dd(Convertor::arrayToBladeString(json_decode( json_encode($this), true)));
 //            $template = Stub::getView('model',[
 //                "Entity" => $this
 //            ]);
@@ -191,7 +191,8 @@ class Entity
 
 
     function addUses($class) {
-        $this->model_uses[] = $class;
+        if (in_array($class, $this->model_uses))
+            $this->model_uses[] = $class;
     }
 
 
