@@ -4,6 +4,8 @@ namespace Generaltools\Crudable;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Debug\ExceptionHandler;
+use Illuminate\Support\Facades\Response;
+use \Generaltools\Crudable\Utils\Response as ResponseUtils;
 use Generaltools\Crudable\Classes\Crudable;
 use Generaltools\Crudable\Routing\Router;
 use Generaltools\Crudable\Exceptions\Handler;
@@ -42,11 +44,18 @@ class CrudableServiceProvider extends ServiceProvider
         $this->app->singleton(ExceptionHandler::class, Handler::class);
 
         $this->app->singleton(Crudable::class, function () {
-            return new Crudable;
+            $crudable = new Crudable;
+            $crudable->init();
+            return $crudable;
         });
 
         $this->app->singleton(Router::class, function () {
             return new Router;
+        });
+
+
+        Response::macro('jsonCrudable', function ($value) {
+            return ResponseUtils::success($value);
         });
     }
 }
