@@ -61,13 +61,13 @@ protected $casts = [{!! \Generaltools\Crudable\Utils\Convertor::arrayToBladeStri
 
 ///////// Getters & Setters /////////
 @foreach ($Entity->getters as $key => $Getter)
-    public function get{!! Str::camel($Getter->name) !!}Attribute($value)
+    public function get{!! Str::studly($Getter->name) !!}Attribute($value)
     {
     return Crudable::entity('{!! $Entity->name !!}')->getters[{{ $key }}]->call($value);
     }
 @endforeach
-@foreach ($Entity->setters as $Setter)
-    public function set{!! Str::camel($Setter->name) !!}Attribute($value)
+@foreach ($Entity->setters as $key => $Setter)
+    public function set{!! Str::studly($Setter->name) !!}Attribute($value)
     {
     $this->attributes['{!! $Setter->name !!}'] = Crudable::entity('{!! $Entity->name !!}')->setters[{{ $key }}]->call($value);
     }

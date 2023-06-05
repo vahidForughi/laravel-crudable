@@ -20,7 +20,7 @@ trait HasEntities
         $entityName = Names::entityName($name);
         if (!isset(self::$entities[$entityName])) {
             $schema = Crudable::config()->entities($entityName);
-            self::$entities[$entityName] = new Entity($entityName, $schema);
+            self::$entities[$entityName] = new Entity($entityName);
             self::$entities[$entityName]->init($schema);
         }
 
