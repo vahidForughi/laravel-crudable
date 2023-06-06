@@ -19,7 +19,12 @@ class Router extends Route
 
     public function apiCrud(string $name, string $controller = EntityController::class , array $options = [])
     {
-        return Route::apiResource($name, $controller, $options);
+        if ($controller == EntityController::class)
+            return Route::group(["namespace" => "\\"], function () {
+                return Route::apiResource($name, $controller, $options);
+            });
+        else
+            return Route::apiResource($name, $controller, $options);
     }
 
 }
