@@ -13,7 +13,7 @@ class ConfigStoreDriver implements StoreDriver {
     }
 
     private function entitiesStoreLoc() {
-        return $this->entitiesStoreFile().'.entities';
+        return $this->entitiesStoreFile();
     }
 
     private function constantsStoreLoc() {
@@ -32,7 +32,13 @@ class ConfigStoreDriver implements StoreDriver {
     
     
     public function find($key) {
-        return config($this->entitiesStoreLoc().'.'.Names::entityName($key));
+        foreach (config($this->entitiesStoreLoc()) as $prop => $entities) {
+            if ($prop !== "constants" && isset($entities[Names::entityName($key)])) {
+                return $entities[Names::entityName($key)];
+            }
+        }
+        return null;
+        // return config($this->entitiesStoreLoc().'.'.Names::entityName($key));
     }
     
     
