@@ -7,7 +7,12 @@ class Convertor
 
     static function arrayToBladeString(array $array) : string
     {
-        return implode(', ', array_map(function ($value) { return "'".$value."'"; }, $array));
+        return implode(', ', array_map(function ($value) {
+            if (!$value)
+                return 'null';
+            else
+                return "'".$value."'"; 
+        }, $array));
     }
 
 }

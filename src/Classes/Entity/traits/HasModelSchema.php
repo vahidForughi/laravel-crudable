@@ -75,16 +75,13 @@ trait HasModelSchema
 
     
     private function setFieldAdditives($field) {
-        if (isset($field->options)) {
-            // dd($field->getter('salam'));
-            $this->addUses($field->uses());
-            $this->addGetter($field->name, function ($value) use ($field) {
-                return $field->getter($value);
-            });
-            $this->addSetter($field->name, function ($value) use ($field) {
-                return $field->setter($value);
-            });
-        }
+        $this->addUses($field->uses());
+        $this->addGetter($field->name, function ($value) use ($field) {
+            return $field->getter($value);
+        });
+        $this->addSetter($field->name, function ($value) use ($field) {
+            return $field->setter($value);
+        });
     }
 
 

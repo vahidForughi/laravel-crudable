@@ -9,8 +9,9 @@ class Field
 {
     public string $name;
     public string $type;
+    public string $typeClass;
     public array $props;
-    public FieldOption $options;
+    public ?FieldOption $options;
 
     function __construct($name, $schema) {
         $this->name = $name;
@@ -18,30 +19,109 @@ class Field
     }
 
     private function parseSchema($schema) {
-        foreach ($schema as $key => $value) {
-            if ($key == "options")
-                $this->options = new FieldOption($value["type"], $value["items"]);
-            else
-                $this->{$key} = $value;
-        }
+        $this->type = $schema["type"];
+        $this->typeClass = __namespace__.'\\'.Str::studly($this->type).'Field';
+        $this->props = isset($schema["props"]) ? $schema["props"] : [];
+        $this->options = isset($schema["options"]) ? new FieldOption($schema["options"]["type"], $schema["options"]["items"]) : null;
+        // foreach ($schema as $key => $value) {
+        //     if ($key == "options")
+        //         $this->options = new FieldOption($value["type"], $value["items"]);
+        //     else
+        //         $this->{$key} = $value;
+        // }
     }
 
     function uses() {
-        if (!empty($this->options))
-            return $this->options->uses();
+        return ($this->typeClass)::uses($this->options);
     }
-
+    
     function getter($value) {
-        if (!empty($this->options))
-            return $this->options->getter($value);
+        return ($this->typeClass)::getter($value, $this->options);
     }
-
+    
     function setter($value) {
-        if (!empty($this->options))
-            return $this->options->setter($value);
+        return ($this->typeClass)::setter($value, $this->options);
     }
 
 }
+
+
+
+
+
+/**
+ * @property string
+ * @property array
+ */
+class FieldType {
+    static function uses() : array {
+        return [];
+    }
+    static function getter($value, $options) {
+        return $value;
+    }
+    static function setter($value, $options) {
+        return $value;
+    }
+}
+
+
+class TextField extends FieldType {}
+
+
+class EmailField extends FieldType {}
+
+
+class PasswordField extends FieldType {}
+
+
+class TextareaField extends FieldType {}
+
+
+class CheckboxField extends FieldType {}
+
+
+class RadioField extends FieldType {}
+
+
+class SwitchField extends FieldType {}
+
+
+class SelectField extends FieldType {
+
+    static function uses() : array {
+        if (!empty($options))
+            return $options->uses();
+        else
+            return [];
+    }
+
+    static function getter($value, $options) {
+        if (!empty($options))
+            return $options->getter($value);
+        else
+            return $value;
+    }
+
+    static function setter($value, $options) {
+        if (!empty($options))
+            return $options->setter($value);
+        else
+            return $value;
+    }
+
+}
+
+
+class SliderField extends FieldType {}
+
+
+class RangeSliderField extends FieldType {}
+
+
+class FileField extends FieldType {}
+
+
 
 
 class FieldOption {
@@ -60,18 +140,18 @@ class FieldOption {
     }
 
     function getter($value) {
-        return ($this->typeClass)::getter($this->items, $value);
+        return ($this->typeClass)::getter($value, $this->items);
     }
 
     function setter($value) {
-        return ($this->typeClass)::setter($this->items, $value);
+        return ($this->typeClass)::setter($value, $this->items);
     }
 }
 
 interface FieldOptionTypeInterface {
     static function uses();
-    static function getter($items, $value);
-    static function setter($items, $value);
+    static function getter($value, $items);
+    static function setter($value, $items);
 }
 
 
@@ -81,13 +161,13 @@ class StaticFieldOption implements FieldOptionTypeInterface {
         return [];
     }
 
-    static function getter($items, $value) {
+    static function getter($value, $items) {
         return array_key_first(array_filter($items, function ($constant) use ($value) {
             return $constant == $value; 
         }));
     }
 
-    static function setter($items, $value) {
+    static function setter($value, $items) {
         return $items[$value];
     }
 
@@ -100,13 +180,13 @@ class ConstantFieldOption implements FieldOptionTypeInterface {
         return [HasConstantVlue::class];
     }
 
-    static function getter($items, $value) {
+    static function getter($value, $items) {
         return array_key_first(array_filter(Crudable::config()->constants($items), function ($constant) use ($value) {
             return $constant == $value; 
         }));
     }
     
-    static function setter($items, $value) {
+    static function setter($value, $items) {
         $consants = Crudable::config()->constants($items);
         if (isset($consants[$value]))
             return $consants[$value];
@@ -119,56 +199,14 @@ class RelationFieldOption implements FieldOptionTypeInterface {
 
     static function uses() {}
 
-    static function getter($items, $value) {
+    static function getter($value, $items) {
         return $value;
     }
 
-    static function setter($items, $value) {
+    static function setter($value, $items) {
         return $value;
     }
 
 }
-
-
-
-/**
- * @property string
- * @property array
- */
-interface FieldTypeInterface {}
-
-
-class TextField implements FieldTypeInterface {}
-
-
-class EmailField implements FieldTypeInterface {}
-
-
-class PasswordField implements FieldTypeInterface {}
-
-
-class TextareaField implements FieldTypeInterface {}
-
-
-class CheckboxField implements FieldTypeInterface {}
-
-
-class RadioField implements FieldTypeInterface {}
-
-
-class SwitchField implements FieldTypeInterface {}
-
-
-class SelectField implements FieldTypeInterface {}
-
-
-class SliderField implements FieldTypeInterface {}
-
-
-class RangeSliderField implements FieldTypeInterface {}
-
-
-class FileField implements FieldTypeInterface {}
-
 
 
