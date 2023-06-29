@@ -63,45 +63,30 @@ class Handler extends ExceptionHandler
             //
         });
 
-        $this->renderable(function (AuthorizationException $e, $request) {
-            if ($request->is('api/*')) {
-                return Response::error(403, 'AuthorizationException', 'Un Authorize');
-            }
-        });
-        $this->renderable(function (NotFoundHttpException $e, $request) {
-            if ($request->is('api/*')) {
-                return Response::error(404, 'NotFoundHttpException', 'Page Not Found');
-            }
-        });
-        $this->renderable(function (HttpException $e, $request) {
-            if ($request->is('api/*')) {
-                return Response::error(404, 'HttpException', 'Not Found');
-            }
-        });
-        $this->renderable(function (ModelNotFoundException $e, $request) {
-            if ($request->is('api/*')) {
-                return Response::error(404, 'ModelNotFoundException', 'Model Not Found');
-            }
-        });
-        $this->renderable(function (AuthenticationException $e, $request) {
-            if ($request->is('api/*')) {
-                return Response::error(403, 'AuthenticationException', 'Un_Authenticated');
-            }
-        });
-        $this->renderable(function (ValidationException $e, $request) {
-            if ($request->is('api/*')) {
-                return Response::error(401, $e->errors(), 'Validation Exception');
-            }
-        });
-        $this->renderable(function (TokenExeption $e, $request) {
-            if ($request->is('api/*')) {
-                return Response::error(401, $e->errors(), 'Token Exeption');
-            }
-        });
-        $this->renderable(function (ProblemExeption $e, $request) {
-            if ($request->is('api/*')) {
-                return Response::error(401, $e->errors(), 'Problem Exeption');
-            }
-        });
+        if (request()->is('api/*')) {
+            $this->renderable(fn (AuthorizationException $e, $request) =>
+                Response::error(403, 'AuthorizationException', ["error" => $e->getMessage(), "trace" => $e->getTrace()]));
+
+            $this->renderable(fn (NotFoundHttpException $e, $request) =>
+                Response::error(404, 'NotFoundHttpException', ["error" => $e->getMessage(), "trace" => $e->getTrace()]));
+
+            $this->renderable(fn (HttpException $e, $request) =>
+                Response::error(404, 'HttpException', ["error" => $e->getMessage(), "trace" => $e->getTrace()]));
+
+            $this->renderable(fn (ModelNotFoundException $e, $request) =>
+                Response::error(404, 'ModelNotFoundException', ["error" => $e->getMessage(), "trace" => $e->getTrace()]));
+
+            $this->renderable(fn (AuthenticationException $e, $request) =>
+                Response::error(403, 'AuthenticationException', ["error" => $e->getMessage(), "trace" => $e->getTrace()]));
+
+            $this->renderable(fn (ValidationException $e, $request) =>
+                Response::error(401, $e->errors(), ["error" => $e->getMessage(), "trace" => $e->getTrace()]));
+
+            $this->renderable(fn (TokenExeption $e, $request) =>
+                Response::error(401, $e->errors(), 'Token Exeption'));
+
+            $this->renderable(fn (ProblemExeption $e, $request) =>
+                Response::error(401, $e->errors(), 'Problem Exeption'));
+        }
     }
 }
