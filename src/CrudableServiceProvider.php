@@ -12,6 +12,7 @@ use Generaltools\Crudable\Exceptions\Handler;
 // use Illuminate\Support\Facades\Blade;
 // use Illuminate\Support\Facades\View;
 // use Generaltools\Crudable\Classes\Config;
+use Illuminate\Routing\Router as BaseRouter;
 
 class CrudableServiceProvider extends ServiceProvider
 {
@@ -49,9 +50,17 @@ class CrudableServiceProvider extends ServiceProvider
             return $crudable;
         });
 
-        $this->app->singleton(Router::class, function () {
-            return new Router;
-        });
+//        $router = new Router($this->app['events'], $this->app);
+//        $this->app->singleton('router', function ($app) use ($router) {
+//            return $router;
+//        });
+
+//        $this->app->singleton(Router::class, function ($app) {
+//            return new Router($app['events'], $app);
+//        });
+
+        BaseRouter::macro('apiCrud', fn (...$args) => Router::apiCrud(...$args));
+        BaseRouter::macro('apiCruds', fn (...$args) => Router::apiCruds(...$args));
 
 
         Response::macro('jsonCrudable', function ($value) {

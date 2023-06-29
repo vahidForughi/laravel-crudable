@@ -2,29 +2,43 @@
 
 namespace Generaltools\Crudable\Routing;
 
-use Generaltools\Crudable\Facades\Crudable;
 use Illuminate\Routing\ResourceRegistrar;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Routing\Router as BaseRouter;
 use Generaltools\Crudable\Controllers\EntityController;
 
-class Router extends Route
+class Router
 {
 
-    public function apiCruds(array $resources, array $options = [])
+    static public function apiCruds(array $resources, array $options = [])
     {
         foreach ($resources as $name => $controller) {
-            $this->apiCrud($name, $controller, $options);
+            if (is_numeric($name)) {
+                $name = $controller;
+                $controller = null;
+            }
+            Route::apiCrud($name, $controller, $options);
         }
     }
 
-    public function apiCrud(string $name, string $controller = EntityController::class , array $options = [])
+    static public function apiCrud(string $name, null|string $controller = EntityController::class , array $options = [])
     {
-        if ($controller == EntityController::class)
-            return Route::namespace("\\")->group(function () use ($name, $controller, $options) {
-                return Route::apiResource($name, $controller, $options);
+//        dd(ResourceRegistrar::getResourceUri($name));
+        $controller = $controller ?: EntityController::class;
+        if ($controller == EntityController::class) {
+            Route::namespace("\\")->group(function () use ($name, $controller, $options) {
+
+                Route::apiResource($name, $controller, $options);
+
+                if (str_contains($name, '.')) {
+                    $uri = (new ResourceRegistrar(app()['router']))->getResourceUri($name);
+                    Route::put($uri, [$controller, 'attach'], $options)->name($name.'.attach');
+                }
+
             });
+        }
         else
-            return Route::apiResource($name, $controller, $options);
+            Route::apiResource($name, $controller, $options);
     }
 
 }
