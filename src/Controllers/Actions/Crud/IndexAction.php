@@ -4,7 +4,6 @@ namespace Generaltools\Crudable\Controllers\Actions\Crud;
 
 use Generaltools\Crudable\Classes\Action\ActionInterface;
 use Generaltools\Crudable\Facades\Crudable;
-use Illuminate\Support\Str;
 
 class IndexAction extends Action implements ActionInterface
 {

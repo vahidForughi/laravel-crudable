@@ -4,8 +4,6 @@ namespace Generaltools\Crudable\Controllers\Actions\Crud;
 
 use Generaltools\Crudable\Classes\Action\ActionInterface;
 use Generaltools\Crudable\Facades\Crudable;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Str;
 
 class ShowAction extends Action implements ActionInterface
 {

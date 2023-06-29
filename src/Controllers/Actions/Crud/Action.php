@@ -26,7 +26,8 @@ class Action implements ActionInterface
     public function beforeValidate() {}
     public function validate()
     {
-        request()->validate(Crudable::entity(array_key_last(Crudable::resources()))->getRules(Crudable::action()->getName()));
+        if (! empty(Crudable::resources()))
+            request()->validate(Crudable::entity(array_key_last(Crudable::resources()))->getRules(Crudable::action()->getName()));
     }
     public function afterValidate() {}
 
