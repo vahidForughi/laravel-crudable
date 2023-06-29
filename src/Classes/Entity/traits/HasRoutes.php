@@ -25,7 +25,11 @@ trait HasRoutes
         $routeRules = ($route && $route->rules) ? $route->rules: [];
         $rules = array_merge($routeRules, $this->rules);
         foreach ($rules as $fieldName => $rule) {
-            $rules[$fieldName] = isset($routeRules[$fieldName]) ? array_merge($routeRules[$fieldName], $this->rules[$fieldName]) : $this->rules[$fieldName];
+            $rule = $this->convertRuleToArray($this->rules[$fieldName] ?? []);
+            if (isset($routeRules[$fieldName]))
+                $rules[$fieldName] = array_merge($this->convertRuleToArray($routeRules[$fieldName] ?? []), $rule);
+            else
+                $rules[$fieldName] = $rule;
         }
         return $rules;
     }
@@ -35,4 +39,8 @@ trait HasRoutes
         return array_merge($this->permissions[$route], $this->permissions);
     }
 
+
+    function convertRuleToArray($rule) : array {
+        return is_array($rule) ? $rule : explode('|', $rule);
+    }
 }

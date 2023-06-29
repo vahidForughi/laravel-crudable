@@ -46,13 +46,13 @@ protected $casts = [{!! \Generaltools\Crudable\Utils\Convertor::arrayToBladeStri
     {
     return $this->{{ $Relation->method_name }}({!! \Generaltools\Crudable\Utils\Convertor::arrayToBladeString($Relation->method_args) !!})
     @if (!empty($Relation->with))
-        ->with({{ ...$Relation->with }});
+        ->with({{ ...$Relation->with }})
     @endif
     @if (!empty($Relation->withPivot))
-        ->withPivot({{ ...$Relation->withPivot }});
+        ->withPivot({!! \Generaltools\Crudable\Utils\Convertor::arrayToBladeString($Relation->withPivot) !!})
     @endif
     @if ($Relation->withTimestamps)
-        ->withTimestamps();
+        ->withTimestamps()
     @endif
     ;
     }

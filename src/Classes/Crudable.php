@@ -10,11 +10,13 @@ use Generaltools\Crudable\Classes\traits\HasEntities;
 use Generaltools\Crudable\Classes\traits\HasPolicies;
 use Generaltools\Crudable\Classes\traits\HasQuery;
 use Generaltools\Crudable\Classes\traits\HasResponse;
+use Generaltools\Crudable\Controllers\Actions\Crud\Action;
 use Generaltools\Crudable\Controllers\Actions\Crud\DestroyAction;
 use Generaltools\Crudable\Controllers\Actions\Crud\IndexAction;
 use Generaltools\Crudable\Controllers\Actions\Crud\ShowAction;
 use Generaltools\Crudable\Controllers\Actions\Crud\StoreAction;
 use Generaltools\Crudable\Controllers\Actions\Crud\UpdateAction;
+use Generaltools\Crudable\Controllers\Actions\Crud\AttachAction;
 use Generaltools\Crudable\Controllers\Handlers\Crud\ActionHandler;
 use Generaltools\Crudable\Controllers\Handlers\Crud\AuthorizeHandler;
 use Generaltools\Crudable\Controllers\Handlers\Crud\ModelHandler;
@@ -40,6 +42,7 @@ class Crudable
         'store' => StoreAction::class,
         'show' => ShowAction::class,
         'update' => UpdateAction::class,
+        'attach' => AttachAction::class,
         'destroy' => DestroyAction::class
     ];
 
@@ -72,15 +75,21 @@ class Crudable
 
     private function parseResourcesAndActionFromRoute()
     {
-        $routeNames = explode('.',request()->route()->getName());
-        $action = end($routeNames);
+        if (request()->route()) {
+            $routeNames = explode('.',request()->route()->getName());
+            $action = request()->route()->getActionMethod();
+        }
+        else {
+            $routeNames = [];
+            $action = 'undefined';
+        }
         $resources = [];
 
         foreach (array_slice($routeNames, 0, count($routeNames) - 1 ) as $routeName)
             $resources[$routeName] = request()->route()->parameter(Str::singular($routeName));
-            
-        $this->setAction(new ($this->actions[$action])($action));
+
         $this->setResources($resources);
+        $this->setAction(isset($this->actions[$action]) ? new ($this->actions[$action])($action) : new Action($action));
     }
 
 

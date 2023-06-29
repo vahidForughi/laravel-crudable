@@ -14,16 +14,17 @@ trait HasQuery
 
     private function initQuery()
     {
-        $firstModelKey = array_key_first($this->resources); 
-        $query = $this->loadModel($firstModelKey)->query();
-        foreach ($this->resources as $key => $resource) {
-            if ($key != $firstModelKey)
-                $query = $query->firstOrFail()->{$key}();
-            if ($resource)
-                $query = $query->where($query->getModel()->getKeyName(),$resource);
+        $firstModelKey = array_key_first($this->resources);
+        if ($firstModelKey) {
+            $query = $this->loadModel($firstModelKey)->query();
+            foreach ($this->resources as $key => $resource) {
+                if ($key != $firstModelKey)
+                    $query = $query->firstOrFail()->{$key}();
+                if ($resource)
+                    $query = $query->where($key.'.'.$query->getModel()->getKeyName(),$resource);
+            }
+            $this->setQuery($query);
         }
-
-        $this->setQuery($query);
     }
 
     

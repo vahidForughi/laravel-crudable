@@ -43,6 +43,10 @@ trait HasModelSchema
             $this->setRoutesFromSchema($schema['routes']);
         if (array_key_exists('relations', $schema))
             $this->setRelationsFromSchema($schema['relations']);
+        if (array_key_exists('getters', $schema))
+            $this->setGettersFromSchema($schema['getters']);
+        if (array_key_exists('setters', $schema))
+            $this->setSettersFromSchema($schema['setters']);
     }
 
     
@@ -70,6 +74,24 @@ trait HasModelSchema
         $this->routes = [];
         foreach ($routesSchema as $name => $routeSchema) {
             $this->routes[] = new Route($name, $routeSchema);
+        }
+    }
+
+
+    private function setGettersFromSchema($gettersSchema) {
+        foreach ($gettersSchema as $name => $getter) {
+            $this->addGetter($name, function ($value) use ($getter) {
+                return $getter($value);
+            });
+        }
+    }
+
+
+    private function setSettersFromSchema($settersSchema) {
+        foreach ($settersSchema as $name => $setter) {
+            $this->addGetter($name, function ($value) use ($setter) {
+                return $setter($value);
+            });
         }
     }
 

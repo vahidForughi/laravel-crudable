@@ -32,13 +32,13 @@ class Entity
 
     public function evalModel()
     {
-    //     if ($this->name == 'article'){
-    //         // dd($this);
-    //        $template = Stub::getView('model',[
-    //            "Entity" => $this
-    //        ]);
-    //        dd($template);
-    //    }
+//         if ($this->name == 'article'){
+//    //         // dd($this);
+//            $template = Stub::getView('model',[
+//                "Entity" => $this
+//            ]);
+//            dd($template);
+//        }
         eval( Stub::getView('model', [
             "Entity" => $this
         ]));
