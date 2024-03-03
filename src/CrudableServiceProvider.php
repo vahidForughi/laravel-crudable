@@ -7,12 +7,12 @@ use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Support\Facades\Response;
 use \Generaltools\Crudable\Utils\Response as ResponseUtils;
 use Generaltools\Crudable\Classes\Crudable;
-use Generaltools\Crudable\Routing\Router;
+use Generaltools\Crudable\Routing\Router as CrudableRouter;
 use Generaltools\Crudable\Exceptions\Handler;
 // use Illuminate\Support\Facades\Blade;
 // use Illuminate\Support\Facades\View;
 // use Generaltools\Crudable\Classes\Config;
-use Illuminate\Routing\Router as BaseRouter;
+use Illuminate\Routing\Router;
 
 class CrudableServiceProvider extends ServiceProvider
 {
@@ -30,7 +30,9 @@ class CrudableServiceProvider extends ServiceProvider
             ], 'crudable-config');
         }
 
+        $this->loadRoutesFrom(__DIR__.'/Routing/web.php');
         $this->loadViewsFrom(__DIR__.'/Stubs', 'crudable.stubs');
+        $this->loadViewsFrom(__DIR__.'/Views', 'crudable.views');
     }
 
     /**
@@ -44,11 +46,7 @@ class CrudableServiceProvider extends ServiceProvider
 
         $this->app->singleton(ExceptionHandler::class, Handler::class);
 
-        $this->app->singleton(Crudable::class, function () {
-            $crudable = new Crudable;
-            $crudable->init();
-            return $crudable;
-        });
+        $this->app->singleton(Crudable::class, fn () => new Crudable);
 
 //        $router = new Router($this->app['events'], $this->app);
 //        $this->app->singleton('router', function ($app) use ($router) {
@@ -59,12 +57,13 @@ class CrudableServiceProvider extends ServiceProvider
 //            return new Router($app['events'], $app);
 //        });
 
-        BaseRouter::macro('apiCrud', fn (...$args) => Router::apiCrud(...$args));
-        BaseRouter::macro('apiCruds', fn (...$args) => Router::apiCruds(...$args));
+        Router::macro('apiCrud', fn (...$args) => CrudableRouter::apiCrud(...$args));
+        Router::macro('apiCruds', fn (...$args) => CrudableRouter::apiCruds(...$args));
 
 
         Response::macro('jsonCrudable', function ($value) {
             return ResponseUtils::success($value);
         });
+
     }
 }

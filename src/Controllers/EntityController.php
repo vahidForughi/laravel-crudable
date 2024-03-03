@@ -11,6 +11,7 @@ class EntityController extends Controller
 
     function __construct()
     {
+        Crudable::init();
         // $controller = Crudable::controller()->bind('after-action', function () {
         //     Crudable::setResponse('111111');
         // })

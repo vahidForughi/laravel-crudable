@@ -48,6 +48,7 @@ class Crudable
 
 
     private array $handlers = [
+//        'init' => InitHandler::class,
         'authorize' => AuthorizeHandler::class,
         'validate' => ValidateHandler::class,
         'model' => ModelHandler::class,
@@ -57,19 +58,24 @@ class Crudable
     ];
 
 
-    function init(): void
+    function __construct ()
     {
-        $this->parseResourcesAndActionFromRoute();
-
         $this->initConfig();
-
-        // $this->initPolicies();
-
-        $this->initQuery();
 
         $this->initController('crudable');
 
         $this->setChain($this->handlers);
+    }
+
+    function init(): void
+    {
+        $this->parseResourcesAndActionFromRoute();
+
+        $this->crudBinds();
+
+        // $this->initPolicies();
+
+        $this->initQuery();
     }
 
 
@@ -95,7 +101,7 @@ class Crudable
 
     private function globalBinds(): void
     {
-        $this->crudBinds();
+        //
     }
 
 

@@ -3,6 +3,7 @@ namespace Generaltools\Crudable\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Generaltools\Crudable\Classes\Crudable;
+use Generaltools\Crudable\Classes\Entity\Relation\Relation;
 
 @if($Entity->slug)
     use Spatie\Sluggable\HasSlug;
@@ -72,5 +73,25 @@ protected $casts = [{!! \Generaltools\Crudable\Utils\Convertor::arrayToBladeStri
     $this->attributes['{!! $Setter->name !!}'] = Crudable::entity('{!! $Entity->name !!}')->setters[{{ $key }}]->call($value);
     }
 @endforeach
+
+
+///////// Helpers /////////
+public function saveRelated($related, $value, $saveType = null)
+{
+    if ($related->save_method == Relation::ASSOCIATED_SAVE_METHOD) {
+        $model = app()->make(Crudable::class)->loadModel($related->name)->find(request()->input($related->name));
+        $this->{$related->name}()->associate($model);
+        $this->save();
+    }
+    else if ($related->method_name == Relation::SAVEMANY_SAVE_METHOD) {
+        $models = array_map(fn ($value) => app()->make(Crudable::class)->loadModel($related->name)->find($value), request()->input($related->name));
+        $this->{$related->name}()->saveMany($models);
+    }
+    else if ($related->method_name == Relation::SYNC_SAVE_METHOD)
+        $this->{$related->name}()->sync(request()->input($related->name));
+    else
+        $this->{$related->name}()->sync(request()->input($related->name));
 }
 
+
+}

@@ -14,15 +14,15 @@ class Entity
         HasRoutes;
 
 
-    public string $name = '';    
+    public string $name = '';
     // public array $constants = [];
 
 
     function __construct($name) {
         $this->name = $name;
     }
-    
-    
+
+
     function init($schema): void {
         if ($schema)
             $this->parseSchemaProps($schema);
@@ -39,6 +39,9 @@ class Entity
 //            ]);
 //            dd($template);
 //        }
+//        dd(Stub::getView('model', [
+//            "Entity" => $this
+//        ]));
         eval( Stub::getView('model', [
             "Entity" => $this
         ]));

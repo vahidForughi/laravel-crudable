@@ -37,8 +37,7 @@ class Handler extends ExceptionHandler
         ModelNotFoundException::class,
         AuthenticationException::class,
         ValidationException::class,
-        TokenExeption::class,
-        ProblemExeption::class
+        InvalidArgumentException::class
     ];
 
     /**
@@ -82,11 +81,6 @@ class Handler extends ExceptionHandler
             $this->renderable(fn (ValidationException $e, $request) =>
                 Response::error(401, $e->errors(), ["error" => $e->getMessage(), "trace" => $e->getTrace()]));
 
-            $this->renderable(fn (TokenExeption $e, $request) =>
-                Response::error(401, $e->errors(), 'Token Exeption'));
-
-            $this->renderable(fn (ProblemExeption $e, $request) =>
-                Response::error(401, $e->errors(), 'Problem Exeption'));
         }
     }
 }
